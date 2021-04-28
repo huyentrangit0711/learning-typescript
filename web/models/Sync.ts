@@ -1,10 +1,11 @@
 import axios, { AxiosPromise } from 'axios'
-interface HasId {
+export interface HasId {
     id?: number
 }
 export class Sync<T extends HasId> {
     constructor(public rootUrl: string) { }
     // fetch by id
+    
     fetch(id: number): AxiosPromise {
         return axios.get(`${this.rootUrl}/${id}`)
     }

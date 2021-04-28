@@ -1,7 +1,8 @@
-import { Eventing } from './Eventing';
+import { Collection } from './Collection';
 import { Sync } from './Sync';
+import { Eventing } from './Eventing';
 import { Attributes } from './Attributes';
-import axios, { AxiosResponse } from 'axios'
+import { Model } from './Model'
 export interface UserData {
     id?: number,
     name?: string,
@@ -9,14 +10,20 @@ export interface UserData {
 }
 
 const rootUrl = 'http://localhost:3000/users'
-export class User {
-    public events: Eventing = new Eventing()
-    public sync: Sync<UserData> = new Sync<UserData>(rootUrl)
-    public attributes: Attributes<UserData>
-    constructor(attrs: UserData) {
-        this.attributes = new Attributes<UserData>(attrs)
+export class User extends Model<UserData>{
+    static buildUser(attrs: UserData): User {
+        return new User(
+            new Attributes<UserData>(attrs),
+            new Eventing(),
+            new Sync<UserData>(rootUrl)
+        )
     }
-
+    static buildUserCollection(): Collection<User, UserData> {
+        return new Collection(
+            rootUrl,
+            (json: UserData) => User.buildUser(json)
+        )
+    }
 
 
 

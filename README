@@ -1,2 +1,6 @@
 https://www.tutorialsteacher.com/typescript/typescript-generic
 Refactor models and run 
+export class Model // DONE
+class User extends Model // DONE
+// Refactor class Collection use generics DONE
+// Add collection on User class

@@ -1,12 +1,15 @@
+
 export class Attributes<T> {
     constructor(private data: T) { }
-    // refactor use generics constraint
-    get(propName: string): number | string | boolean {
-        return this.data[propName]
+    get = <K extends keyof T>(key: K): T[K] => {
+        return this.data[key]
     }
     //set value to data
     set(updateData: T): void {
         Object.assign(this.data, updateData)
     }
     // add on event attach on User class
+    getAll():T {
+        return this.data
+    }
 }
